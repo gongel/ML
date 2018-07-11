@@ -55,8 +55,7 @@ print( np.matrix(np.zeros(theta.shape)).shape)
 def gradientDescent(X,y,theta,alpha,iters):
     temp = np.matrix(np.zeros(theta.shape))
     parameters = int(theta.ravel().shape[1])
-    cost = np.zeros(iters)
-
+    cost = np.zeros(iters) #此时cost为一个一维数组，所以下面用cost[i]进行访问
     for i in range(iters):
         error = (X * theta.T) - y #此时erros为一个mx1的矩阵
 
