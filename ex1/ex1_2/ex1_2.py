@@ -4,6 +4,7 @@ import  matplotlib.pyplot as plt
 
 path = './ex1data2.txt'
 data = pd.read_csv(path,header=None,names=['size','bedrooms','price'])
+data = (data - data.mean()) / data.std()
 # print(data.head())
 # print(len(data))
 
@@ -38,6 +39,7 @@ def  gradientDescent(X,y,theta,alpha,iters):
 
         for j in range(parameters):
             term = np.multiply(error,X[:,j])
+            # print(len(X))
             temp[0,j] = theta[0,j] - (alpha / len(X)) * np.sum(term)
         theta = temp
         cost[i] = computerCost(X,y,theta)
