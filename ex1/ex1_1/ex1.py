@@ -5,8 +5,8 @@ import matplotlib.pyplot as plt
 #DataFrame
 path='./ex1data1.txt'
 data = pd.read_csv(path,header=None,names=['population','profit'])
-print(data.head())#显示数据前五行
-print(data.describe())#描述数据的数量，平均值，中位数等等
+# print(data.head())#显示数据前五行
+# print(data.describe())#描述数据的数量，平均值，中位数等等
 
 
 def computerCost(X,y,theta):# J(θ0,θ1)
@@ -19,7 +19,7 @@ def computerCost(X,y,theta):# J(θ0,θ1)
     return np.sum(inner)/(2 * len(X))
 
 data.insert(0,'ones',1)
-print(data.head())
+# print(data.head())
 '''
 arameters:	
 loc : (int) Insertion index. Must verify 0 <= loc <= len(columns)  要插入的那一列
@@ -90,3 +90,17 @@ sub.plot(data.population, data.population*k + b, label="Prediction")
 sub.legend(loc=2)
 plt.show()
 
+#使用scikit-learn的线性回归函数
+from sklearn import linear_model
+x = X[:,1]   #sciket-learn不需要插入一列全1，即不需要x0=1
+model = linear_model.LinearRegression()
+model.fit(x,y)
+print(model.coef_) #学习的系数theta
+f = model.predict(x)
+
+# fig = plt.subplot()
+plt.plot(x, f, 'r')
+plt.scatter(data.population,data.profit)
+plt.xlabel('population')
+plt.ylabel('profit')
+plt.show()

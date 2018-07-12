@@ -50,3 +50,23 @@ iters = 1000
 
 g,cost = gradientDescent(X,y,theta,alpha,iters)
 print(g)
+
+#训练进程（每次迭代得到的cost）
+fig = plt.subplot()
+fig.plot(np.arange(iters),cost,'r')
+fig.set_xlabel('iterations')
+fig.set_ylabel('cost')
+plt.show()
+
+
+#正规方程
+def normalEqn(X,y):
+    theta = np.linalg.inv(X.T@X)@ X.T@y
+    return theta
+
+thetaEqn = normalEqn(X,y)
+print(thetaEqn)
+'''
+*，dot的区别
+https://www.cnblogs.com/liuhuiwisdom/p/6026369.html
+'''
