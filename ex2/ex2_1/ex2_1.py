@@ -6,7 +6,7 @@ path = './ex2data1.txt'
 data = pd.read_csv(path,header=None,names=['e1','e2','admitted'])
 # print(data.head())
 
-positive = data[data['admitted'].isin([1])] #data的admitted行是否包括1
+positive = data[data['admitted'].isin([1])] #data的admitted行是否包括1，positive和negative是个dataframe
 negative = data[data['admitted'].isin([0])]#
 
 plt.scatter(positive['e1'],positive['e2'],s = 50,c = 'b',marker='x',label='admitted')
