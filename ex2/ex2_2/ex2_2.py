@@ -59,6 +59,16 @@ def gradientReg(theta,X,y,alpha):
             grad[j]=np.sum(term)/len(X)+alpha/len(X)*theta[:,j]
     return grad
 
+def gradientReg_without_loop(theta,X,y,alpha,lambd=1):
+    theta = np.matrix(theta)
+    X = np.matrix(X)
+    y = np.matrix(y)
+    error = sigmoid(X * theta.T) - y
+    grad=(alpha*X.T*error/len(X)).T+alpha*lambd/len(X)*theta
+    #theta0没有被正则化
+    grad[0,0]=np.sum(np.multiply(error,X[:,0]))/len(X)
+    #或者grad[0,0]=np.sum(error)/len(X) 因为X[:,0]全为1
+    return np.array(grad).ravel()
 
 cols=data.shape[1]
 x=data.iloc[:,1:cols]
@@ -73,5 +83,6 @@ print(costReg(theta,X,y,alpha))
 print(gradientReg(theta,X,y,alpha))
 
 import scipy.optimize as opt
-result=opt.fmin_tnc(func=costReg,x0=theta,fprime=gradientReg,args=(X,y,alpha))
+result=opt.fmin_tnc(func=costReg,x0=theta,fprime=gradientReg_without_loop,args=(X,y,alpha))
+# result=opt.fmin_tnc(func=costReg,x0=theta,fprime=gradientReg,args=(X,y,alpha))
 print(result)
