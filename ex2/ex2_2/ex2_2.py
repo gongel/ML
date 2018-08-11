@@ -31,7 +31,7 @@ data.drop('t2',axis=1,inplace=True)
 def sigmoid(x):
     return 1/(1+np.exp(-x))
 
-def costReg(X,y,theta,alpha):
+def costReg(theta,X,y,alpha):
     theta=np.matrix(theta)
     X=np.matrix(X)
     y=np.matrix(y)
@@ -42,13 +42,13 @@ def costReg(X,y,theta,alpha):
     return (np.sum(first-second)/len(X)+reg).getA()[0][0]#len是维度
 
 
-def gradientReg(X,y,theta,alpha):
+def gradientReg(theta,X,y,alpha):
     theta=np.matrix(theta)
     X=np.matrix(X)
     y=np.matrix(y)
-    paramaters=theta.shape[1]
-    grad=np.zeros(paramaters)
-    
+    paramaters=theta.shape[1]#获取theta的列数
+    grad=np.zeros(paramaters) #y一维数组
+
     error=sigmoid(X*theta.T)-y
 
     for j in range(paramaters):
@@ -59,6 +59,7 @@ def gradientReg(X,y,theta,alpha):
             grad[j]=np.sum(term)/len(X)+alpha/len(X)*theta[:,j]
     return grad
 
+
 cols=data.shape[1]
 x=data.iloc[:,1:cols]
 y=data.iloc[:,0:1]
@@ -68,9 +69,9 @@ theta=np.zeros(11)
 
 
 alpha=1
-print(costReg(X,y,theta,alpha))
-print(gradientReg(X,y,theta,alpha))
+print(costReg(theta,X,y,alpha))
+print(gradientReg(theta,X,y,alpha))
 
 import scipy.optimize as opt
-result=opt.fmin_tnc(func=costReg,x0=theta,fprime=np.gradientReg,args=(X,y,alpha))
+result=opt.fmin_tnc(func=costReg,x0=theta,fprime=gradientReg,args=(X,y,alpha))
 print(result)
