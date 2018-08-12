@@ -65,15 +65,7 @@ def one_vs_all(X,y,num_labels,alpha):
         all_theta[i-1,:]=fmin.x
     return all_theta
 
-rows=data['X'].shape[0]
-params=data['X'].shape[1]
-all_theta=np.zeros((10,params+1))
-X=np.insert(data['X'],0,values=np.ones(rows),axis=1)
-theta=np.zeros(params+1)
-y_0=np.array([1 if label ==0 else 0 for label in data['y']])
-y_0=np.reshape(y_0,(rows,1))
 
-print(X.shape,y_0.shape,theta.shape,all_theta.shape)
 print(np.unique(data['y'])) # Find the unique elements of an array.即标签的类别数目
 #类别为1-10十个数字
 
@@ -88,7 +80,7 @@ def predict_all(X,all_theta):
     X = np.matrix(X)
     all_theta=np.matrix(all_theta)
     h=sigmoid(X*all_theta.T)
-    h_argmax=np.argmax(h,axis=1)#返回按x或y轴找到的最大值下标组成的数组，数组元素个数为x轴（行上）或者y轴（列上）的元素的个数
+    h_argmax=np.argmax(h,axis=1)#返回x轴上（axis=1）或y轴上（axis=0）找到的最大值元素所在下标组成的一维数组
     h_argmax+=1#因为数组无论行还是列都是以0开始的，但是我们的标签是从1开始的，所以得加1
     return h_argmax
 
