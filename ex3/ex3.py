@@ -59,7 +59,7 @@ def one_vs_all(X,y,num_labels,alpha):
 
     for i in range(1,num_labels+1):
         theta=np.zeros(params+1)
-        y_i=np.array([1 if label == i else 0 for label in  y])#将y变成两类：0或者1
+        y_i=np.array([1 if label == i else 0 for label in  y])#将y变成两类：0或者1。其实可以用OneHotEncoder代替
         y_i=np.reshape(y_i,(rows,1))
         fmin = minimize(fun=costReg,x0=theta,args=(X,y_i,alpha),method='TNC',jac=gradient_without_loop)
         all_theta[i-1,:]=fmin.x
